@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  artist_id: 1
+  addr: MyString
+  name: MyString
+
+two:
+  artist_id: 1
+  addr: MyString
+  name: MyString

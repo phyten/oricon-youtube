@@ -1,0 +1,46 @@
+<div class="container_16">
+  <%= render "share/h1"  %>
+  <div class="grid_16">
+
+    <!-- 左側 -->
+    <div class="grid_3 alpha">
+      <h2>スポンサーリンク</h2>
+      <!-- アドセンス -->
+      <script type="text/javascript"><!--
+                                        google_ad_client = "pub-3481475867852629";
+                                        /* 120x600, 作成済み 10/10/29 */
+                                        google_ad_slot = "4981572010";
+                                        google_ad_width = 120;
+                                        google_ad_height = 600;
+                                        //-->
+      </script>
+      <script type="text/javascript"
+	      src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+      </script>
+    </div>
+
+    <!-- 真ん中 -->
+    <div class="grid_10">
+      <h2>今日のオリコンランキング</h2>
+      <p>画像をクリックすると当該サイトに飛びます。</p>
+      <table class="ranking">
+        <caption>オリコンから集計</caption>
+        <tr><th>順位</th><th>アーティスト</th><th>曲名</th><th>画像</th></tr>
+	<% @rankings.each do |ranking| %>
+          <tr>
+	    <td><%= ranking.ranking  %></td><td><%= ranking.music.artist.name  %></td><td><%= ranking.music.name  %></td>
+	    <td>
+	      <%= link_to :controller => "rankings", :action => "each_page", :id => ranking.music.addr do %>
+		<img src="http://i.ytimg.com/vi/<%= ranking.music.addr %>/default.jpg" alt="<%= ranking.music.addr %>" />
+	      <% end %>
+	    </td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
+    <!-- 右側 -->
+    <%= render "share/sidemenu" %>
+  </div>
+</div>
+
+

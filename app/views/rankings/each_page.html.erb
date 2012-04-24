@@ -1,0 +1,48 @@
+<div class="container_16">
+  <%= render "share/h1" %>
+  <div class="grid_16">
+    <!-- 左側 -->
+    <div class="grid_3 alpha">
+      <h3>スポンサーリンク</h3>
+      <!-- アドセンス -->
+      <script type="text/javascript"><!--
+					google_ad_client = "pub-3481475867852629";
+					/* 120x600, 作成済み 10/10/29 */
+					google_ad_slot = "4981572010";
+					google_ad_width = 120;
+					google_ad_height = 600;
+					//-->
+      </script>
+      <script type="text/javascript"
+	      src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+      </script>
+    </div>
+
+    <!-- 真ん中 -->
+
+    <div class="grid_10">
+      <h2><%= @music.name %> By <%= @music.artist.name %></h2>
+
+      <div class="grid_7 alpha">
+	<div class="grid_7 alpha">
+	  <object style="height: 390px; width: 480px">
+	    <param name="movie" value="http://www.youtube.com/v/<%= @music.addr %>?version=3" />
+	    <param name="allowFullScreen" value="true">
+	    <param name="allowScriptAccess" value="always">
+	    <embed src="http://www.youtube.com/v/<%= @music.addr %>?version=3" type="application/x-shockwave-flash" allowfullscreen="true" allowScriptAccess="always" width="390" height="390">
+	  </object>
+	</div>
+	<div class="clear"></div>
+	<!-- amazon review -->
+      </div>
+
+    </div>
+    <!-- 右側 -->
+    <%= render "share/sidemenu" %>
+
+  </div>
+
+</div>
+</div>
+
+
