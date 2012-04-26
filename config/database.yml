@@ -30,9 +30,9 @@ test:
 production:
   adapter: mysql
   database: oricon-youtube
-  host: www.phyten.net
+  host: 127.0.0.1
   port: 3306
-  username: phyten
+  username: root
   password: j423636
   encoding: utf8
   pool: 5

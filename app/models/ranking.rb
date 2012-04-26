@@ -29,8 +29,8 @@ class Ranking < ActiveRecord::Base
     good_musics = []
 
     Artist.transaction do
-      ranking_group_id = RankingGroup.find(:last).nil? ? 1 : RankingGroup.find(:last).id + 1
       RankingGroup.create()
+      ranking_group_id = RankingGroup.find(:last).id
       oricon.ranking.each.with_index do |rank, index|
         pp good_music = youtube.search_keyword([rank[:artist], rank[:music]], rank[:music]).good_music
         next unless good_music

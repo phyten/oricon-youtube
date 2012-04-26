@@ -22,7 +22,7 @@ class Youtube
   def initialize
     @config = {
       :url => {
-        :search_keyword => 'http://gdata.youtube.com/feeds/api/videos/?vq=',
+        :search_keyword => 'http://gdata.youtube.com/feeds/api/videos/?max-results=8&vq=',
         :weekly_ranking => 'http://www.oricon.co.jp/rank/js/d/',
         :weekly_ranking_more => 'http://www.oricon.co.jp/rank/js/d/more/',
       },
@@ -30,26 +30,22 @@ class Youtube
                   {
                     :title => "(hd)|(高音質)|(完全版)|(オフィシャル)|(mp3)",
                     :content => "(高音質)|(完全版)|(オフィシャル)",
-                    :statistics => 10**11,
                     :priority => 1
                   },
                   {
                     :title => "(ripped)|(音源)|(pv)|(mv)",
                     :content => "(ripped)|(音源)|(soundtrack)",
-                    :statistics => 10**10,
                     :priority => 2
                   },
                   {
                     :title => "(autoplay)",
                     :content => "(autoplay)|(full)",
-                    :statistics => 10**9,
                     :priority => 3
                   }
                  ],
       :omit => {
         :title => "(弾き語り)|(踊って)|(歌って)|(演奏して)|(アレンジ)|(カラオケ)|(耳コピ)|(covered)|(midi)|(まとめ)|(インタビュー)|(【.+?てみた】)|(ロケ地)|(宣伝トラック)",
         :content => "(歌い)|(弾き語り)|(踊って)|(歌って)|(演奏して)|(アレンジ)|(カラオケ)|(プレイ動画)|(player)|(full combo)|(plays)|(played)|(耳コピ)",
-        :statistics => 1,
         :priority => 4
       }
     }
@@ -63,7 +59,8 @@ class Youtube
   def search_keyword(keyword, music_name)
     # 引数keywordは任意の複数のキーワードを配列で渡している。
     musics = []
-    page = @mech.get(URI.encode(@config[:url][:search_keyword]+keyword.map{ |key| key.gsub(/\/.+/, "")}.join(" ").tr("\-", " ")))
+    page = @mech.get(URI.encode(@config[:url][:search_keyword]+keyword.map{ |key| key.gsub(/\/.+/, "").gsub(/\(.+?\)/,"").gsub(/\-/,"")}.join(" ")))
+    pp keyword.map{ |key| key.gsub(/\/.+/, "").gsub(/\(.+?\)/,"").gsub(/\-/,"")}.join(" ")
     begin
       doc = REXML::Document.new(REXML::Source.new(page.content))
     rescue Exception => exc
@@ -82,9 +79,11 @@ class Youtube
       musics[cnt][:favorite] = !entry.elements["yt:statistics"].nil? ? entry.elements["yt:statistics"].attributes["favoriteCount"] : 0
       musics[cnt][:average] = !entry.elements["gd:rating"].nil? ? entry.elements["gd:rating"].attributes["average"] : 0
       musics[cnt][:raters] = !entry.elements["gd:rating"].nil? ? entry.elements["gd:rating"].attributes["numRaters"] : 0
+      musics[cnt][:seconds] = !entry.elements["media:group"].elements["yt:duration"].nil? ? entry.elements["media:group"].elements["yt:duration"].attributes["seconds"] : 0
       musics[cnt][:favorite_percentage] = musics[cnt][:statistics].to_i != 0 ? (musics[cnt][:favorite].to_f/musics[cnt][:statistics].to_f).to_f * 100.0 : 0
       musics[cnt][:raters_percentage] = musics[cnt][:statistics].to_i != 0 ? (musics[cnt][:raters].to_f/musics[cnt][:statistics].to_f).to_f * 100.0 : 0      
       cnt = cnt + 1
+
     }
     @musics = musics
     @music_name = music_name
@@ -130,6 +129,10 @@ class Youtube
         song[:rank] = []
       end
 
+      if song[:seconds].to_i < 60
+        song[:rank] = []
+      end
+
       if song[:favorite].to_i == 0
         song[:rank] = []
       end
@@ -141,10 +144,10 @@ class Youtube
         next
       end
       if rank_tmp.blank? || song[:rank].min <= rank_tmp.min
-        if statistics < song[:statistics].to_i
-          statistics = song[:statistics].to_i
-          good_song = song
-        end        
+            if statistics < song[:statistics].to_i
+              statistics = song[:statistics].to_i
+              good_song = song
+            end        
       end
     }
     if good_song == { }
