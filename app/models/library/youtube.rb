@@ -132,7 +132,7 @@ class Youtube
         song[:rank] = []
       end
 
-      if song[:seconds].to_i < 60
+      if song[:seconds].to_i < 80
         song[:rank] = []
       end
 
@@ -140,9 +140,9 @@ class Youtube
         song[:rank] = []
       end
 
-      if song[:average].to_f == 5.0
-        song[:rank] = []
-      end
+      # if song[:average].to_f == 5.0
+      #   song[:rank] = []
+      # end
       if song[:rank].blank?
         next
       end
