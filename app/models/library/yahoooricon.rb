@@ -17,25 +17,13 @@ require "rexml/document"
 require "pp"
 require "mysql"
 
-class YahooOricon
+class YahooOricon < Scraper
 
   attr_accessor :url
 
   def initialize
     @url = 'http://rank.music.yahoo.co.jp/rank_dtl/sa/or/d/sngl'
-    @useragent = 'Mac Safari'
-    @mechanize = Mechanize.new
-    @mechanize.read_timeout = 20
-    @mechanize.max_history = 10
-    @mechanize.user_agent_alias = @useragent
-  end
-
-  def content
-    return @document if @document
-    page = @mechanize.get(@url)
-    @content = page.content.to_s.toutf8
-    @document = Hpricot @content
-    return @document
+    super
   end
 
   def ranking

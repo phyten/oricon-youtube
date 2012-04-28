@@ -22,7 +22,7 @@ class Youtube
   def initialize
     @config = {
       :url => {
-        :search_keyword => 'http://gdata.youtube.com/feeds/api/videos/?max-results=8&vq=',
+        :search_keyword => 'http://gdata.youtube.com/feeds/api/videos/?max-results=20&vq=',
         :weekly_ranking => 'http://www.oricon.co.jp/rank/js/d/',
         :weekly_ranking_more => 'http://www.oricon.co.jp/rank/js/d/more/',
       },
@@ -112,6 +112,9 @@ class Youtube
         rank << config[:priority] if song[:title].downcase =~ /#{title}/ || song["content"] =~ /#{content}/
         rank
       }
+      if song[:title].downcase =~ /#{music_name}/
+        rank_array << 4
+      end
       if rank_array.blank?
         song[:rank] = [100]
       else
@@ -156,8 +159,8 @@ class Youtube
     return good_song
   end
   
-  def csv(artist_name, music_name)
-    csv_writer = "test.csv"
+  def csv(artist_name, music_name, csv_name="test.csv")
+    csv_writer = csv_name
     CSV.open(csv_writer, "a") do |writer|
       @musics.each do |music|
         ln = (0.004006 * music[:statistics].to_f - 0.0000000001383 * music[:statistics].to_f**2 - 24.73)
