@@ -22,7 +22,7 @@ class Youtube
   def initialize
     @config = {
       :url => {
-        :search_keyword => 'http://gdata.youtube.com/feeds/api/videos/?max-results=20&vq=',
+        :search_keyword => 'http://gdata.youtube.com/feeds/api/videos/?max-results=10&vq=',
         :weekly_ranking => 'http://www.oricon.co.jp/rank/js/d/',
         :weekly_ranking_more => 'http://www.oricon.co.jp/rank/js/d/more/',
       },
