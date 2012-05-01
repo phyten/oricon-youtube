@@ -103,9 +103,6 @@ class Youtube
       song[:title] = Moji.han_to_zen(song[:title], Moji::HAN_KATA)
       song[:title] = Moji.zen_to_han(song[:title], Moji::ZEN_ASYMBOL)
       song[:title] = Moji.zen_to_han(song[:title], Moji::ZEN_NUMBER)
-      # if song[:title].downcase =~ /#{music_name}/
-      #   statistics_tmp = 10**12 + statistics_tmp
-      # end
       rank_array = @config[:filter].inject([]){ |rank, config|
         title = config[:title]
         content = config[:content]
@@ -140,9 +137,6 @@ class Youtube
         song[:rank] = []
       end
 
-      # if song[:average].to_f == 5.0
-      #   song[:rank] = []
-      # end
       if song[:rank].blank?
         next
       end

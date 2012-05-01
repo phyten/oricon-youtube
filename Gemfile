@@ -10,6 +10,7 @@ gem 'mysql'
 gem 'ruby-mysql'
 gem 'yaml_waml'
 gem 'rsruby'
+gem 'factory_girl', '2.3.2'
 
 
 group :development do

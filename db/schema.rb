@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120413151927) do
+ActiveRecord::Schema.define(:version => 20120429102445) do
 
   create_table "artists", :force => true do |t|
     t.string   "name"
@@ -20,6 +20,12 @@ ActiveRecord::Schema.define(:version => 20120413151927) do
     t.datetime "updated_at",    :null => false
   end
 
+  create_table "m_groups", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "musics", :force => true do |t|
     t.integer  "artist_id"
     t.string   "addr"
@@ -27,9 +33,11 @@ ActiveRecord::Schema.define(:version => 20120413151927) do
     t.string   "name_downcase"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
+    t.integer  "m_group_id"
   end
 
   add_index "musics", ["artist_id"], :name => "index_musics_on_artist_id"
+  add_index "musics", ["m_group_id"], :name => "index_musics_on_m_group_id"
 
   create_table "ranking_groups", :force => true do |t|
     t.datetime "created_at", :null => false
