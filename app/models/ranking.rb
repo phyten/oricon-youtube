@@ -42,9 +42,16 @@ class Ranking < ActiveRecord::Base
           artist_id = Artist.find_by_name_downcase(rank[:artist].downcase).id
         end
 
-        Music.create({:name => rank[:music], :name_downcase => rank[:music].downcase, :artist_id => artist_id, :addr => good_music[:addr]})
-        music_id = Music.find(:last).id
-
+        music_id = ""
+        if Music.find_by_name_downcase(rank[:music].downcase).blank?
+          Music.create({:name => rank[:music], :name_downcase => rank[:music].downcase, :artist_id => artist_id, :addr => good_music[:addr]})
+          music_id = Music.find(:last).id
+        else          
+          music = Music.find_by_name_downcase(rank[:music].downcase)
+          music.addr = good_music[:addr]
+          music.save!
+          music_id = Music.find_by_name_downcase(rank[:music].downcase).id
+        end
         Ranking.create({:music_id => music_id, :ranking => index + 1, :ranking_group_id => ranking_group_id})
       end
     end

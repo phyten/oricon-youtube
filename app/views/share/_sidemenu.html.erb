@@ -1,14 +1,17 @@
 <!-- 右側 -->
 <div class="grid_3 omega">
-<h2>サイドメニュー</h2>
-<ul class="side">
-  <li><%= link_to "トップへ戻る", :controller => "rankings", :action => "index" %></li>
-</ul>
-<div class="grid_3 alpha">
-<h3>音ゲー</h3>
-</div>
-<div class="grid_3 alpha">
-<h3>ランキング</h3>
-<p>ただいま他のランキングも鋭意作成中です。</p>
-</div>
+  <h2>サイドメニュー</h2>
+  <ul class="side">
+    <li><%= link_to "トップへ戻る", :controller => "rankings", :action => "index" %></li>
+  </ul>
+  <div class="grid_3 alpha">
+    <h3>アーティスト</h3>
+    <% @artists.each do |artist| %>
+      <ul class="side side_left">
+	<li>
+	  <%= link_to "#{artist.name}の曲一覧", :controller => "rankings", :action => "artist_page", :artist_id => artist.id %>
+	</li>
+      </ul>
+    <% end %>
+  </div>
 </div>

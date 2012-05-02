@@ -2,6 +2,7 @@ OriconYoutube::Application.routes.draw do
 
   root :to => 'rankings#index'
   match 'rankings/each_page' => 'rankings#each_page'
+  match 'rankings/artist_page' => 'rankings#artist_page'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

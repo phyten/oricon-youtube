@@ -9,6 +9,7 @@ Licensed under GPL and MIT.
 
 /* Containers
    ----------------------------------------------------------------------------------------------------*/
+
 .container_16 {
     margin-left: auto;
     margin-right: auto;
@@ -18,6 +19,7 @@ Licensed under GPL and MIT.
 .container_16 h2,h3,h4 {
     font-size: 80%;
     background: lightgrey;
+    padding-left: 1em;
 }
 
 a:link img,
@@ -478,3 +480,8 @@ table.ranking td {
     list-style:outside none;
     font-size: 70%;
 }
+
+.side_left {
+    margin-left: -1em;
+}
+
