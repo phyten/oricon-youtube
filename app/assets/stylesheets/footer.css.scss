@@ -1,0 +1,17 @@
+hr.footer {
+    border: 0;
+    height: 1;
+    background: #333;
+}
+
+div#footer {
+    padding-top:10px;
+    padding-bottom:10px;
+    background-color: Lavender;
+    address {
+	text-align:center;
+    }
+    a {
+	color: black;
+    }
+}

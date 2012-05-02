@@ -1,0 +1,29 @@
+<div class="container_16">
+  <%= render "share/h1" %>
+  <div class="grid_16">
+    <!-- 左側 -->
+    <%= render "share/left_adsense" %>
+    
+    <!-- 真ん中 -->
+
+    <div class="grid_10">
+      <h2><%= @artist.name %>の曲一覧</h2>
+      <dl>
+      <% @artist.musics.each do |music| %>
+	<dt><%= music.name %></dt>
+	<dd>
+	<%= link_to :controller => "rankings", :action => "each_page", :id => music.addr do %>
+	  <img src="http://i.ytimg.com/vi/<%= music.addr %>/default.jpg" alt="<%= music.addr %>" />
+	<% end %>
+	</dd>
+      <% end %>
+      </dl>
+    </div>
+    <!-- 右側 -->
+    <%= render "share/sidemenu" %>
+
+  </div>
+
+</div>
+
+
