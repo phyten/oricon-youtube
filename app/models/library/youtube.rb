@@ -60,7 +60,7 @@ class Youtube
     # 引数keywordは任意の複数のキーワードを配列で渡している。
     musics = []
     page = @mech.get(URI.encode(@config[:url][:search_keyword]+keyword.map{ |key| key.gsub(/\/.+/, "").gsub(/\(.+?\)/,"").gsub(/\-/,"")}.join(" ")))
-    pp keyword.map{ |key| key.gsub(/\/.+/, "").gsub(/\(.+?\)/,"").gsub(/\-/,"")}.join(" ")
+    pp URI.encode(@config[:url][:search_keyword]+keyword.map{ |key| key.gsub(/\/.+/, "").gsub(/\(.+?\)/,"").gsub(/\-/,"")}.join(" "))
     begin
       doc = REXML::Document.new(REXML::Source.new(page.content))
     rescue Exception => exc
@@ -103,12 +103,20 @@ class Youtube
       song[:title] = Moji.han_to_zen(song[:title], Moji::HAN_KATA)
       song[:title] = Moji.zen_to_han(song[:title], Moji::ZEN_ASYMBOL)
       song[:title] = Moji.zen_to_han(song[:title], Moji::ZEN_NUMBER)
-      rank_array = @config[:filter].inject([]){ |rank, config|
-        title = config[:title]
-        content = config[:content]
-        rank << config[:priority] if song[:title].downcase =~ /#{title}/ || song["content"] =~ /#{content}/
-        rank
-      }
+      music_name = Moji.zen_to_han(music_name, Moji::ZEN_ALPHA)
+      music_name = Moji.han_to_zen(music_name, Moji::HAN_KATA)
+      music_name = Moji.zen_to_han(music_name, Moji::ZEN_ASYMBOL)
+      music_name = Moji.zen_to_han(music_name, Moji::ZEN_NUMBER)
+      music_name = music_name.gsub(/\/.+/, "").gsub(/\(.+?\)/,"").gsub(/\-/,"")
+      puts music_name + song[:title]
+      if song[:title].downcase =~ /#{music_name}/
+          rank_array = @config[:filter].inject([]){ |rank, config|
+          title = config[:title]
+          content = config[:content]
+          rank << config[:priority] if song[:title].downcase =~ /#{title}/ || song["content"] =~ /#{content}/
+          rank
+        }
+      end
       if song[:title].downcase =~ /#{music_name}/
         rank_array << 4
       end
@@ -117,6 +125,8 @@ class Youtube
       else
         song[:rank] = rank_array
       end
+
+      pp song[:rank]
 
       title = @config[:omit][:title]
       content = @config[:omit][:content]
@@ -137,13 +147,16 @@ class Youtube
         song[:rank] = []
       end
       if song[:rank].blank?
+        puts "next"
         next
       end
       if rank_tmp.blank? || song[:rank].min <= rank_tmp.min
-            if statistics < song[:statistics].to_i
-              statistics = song[:statistics].to_i
-              good_song = song
-            end        
+        puts song[:rank].min
+        if statistics < song[:statistics].to_i
+          statistics = song[:statistics].to_i
+          rank_tmp = song[:rank]
+          good_song = song
+        end        
       end
     }
     if good_song == { }
