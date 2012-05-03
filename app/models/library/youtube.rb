@@ -22,7 +22,7 @@ class Youtube
   def initialize
     @config = {
       :url => {
-        :search_keyword => 'http://gdata.youtube.com/feeds/api/videos/?max-results=10&vq=',
+        :search_keyword => 'http://gdata.youtube.com/feeds/api/videos/?lr=ja&max-results=10&vq=',
         :weekly_ranking => 'http://www.oricon.co.jp/rank/js/d/',
         :weekly_ranking_more => 'http://www.oricon.co.jp/rank/js/d/more/',
       },
@@ -136,7 +136,6 @@ class Youtube
       if song[:favorite].to_i == 0
         song[:rank] = []
       end
-
       if song[:rank].blank?
         next
       end
