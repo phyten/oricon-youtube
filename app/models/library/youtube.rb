@@ -28,7 +28,7 @@ class Youtube
       },
       :filter => [
                   {
-                    :title => "(hd)|(高音質)|(完全版)|(オフィシャル)|(mp3)",
+                    :title => "(hd)|(高音質)|(完全版)|(オフィシャル)|(mp3)|(公式)",
                     :content => "(高音質)|(完全版)|(オフィシャル)",
                     :priority => 1
                   },
@@ -118,7 +118,7 @@ class Youtube
         }
       end
       if song[:title].downcase =~ /#{music_name}/
-        rank_array << 4
+        rank_array << 10
       end
       if rank_array.blank?
         song[:rank] = [100]
