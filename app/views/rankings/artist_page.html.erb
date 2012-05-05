@@ -8,6 +8,7 @@
 
     <div class="grid_10">
       <h2><%= @artist.name %>の曲一覧</h2>
+      <p><%= @artist.wiki %></p>
       <dl>
       <% @artist.musics.each do |music| %>
 	<dt><%= music.name %></dt>

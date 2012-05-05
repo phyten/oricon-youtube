@@ -135,9 +135,9 @@ class Youtube
       end
 
       # averageの値がしきい値を下回れば省く
-      if song[:average].to_f < 4.5 && song[:average].to_f != 0.0
-        song[:rank] = []
-      end
+      # if song[:average].to_f < 4.5 && song[:average].to_f != 0.0
+      #   song[:rank] = []
+      # end
 
       if song[:seconds].to_i < 80
         song[:rank] = []
