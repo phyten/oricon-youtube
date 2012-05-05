@@ -59,7 +59,7 @@ class Youtube
   def search_keyword(keyword, music_name)
     # 引数keywordは任意の複数のキーワードを配列で渡している。
     musics = []
-    page = @mech.get(URI.encode(@config[:url][:search_keyword]+keyword.map{ |key| key.gsub(/\/.+/, "").gsub(/\(.+?\)/,"").gsub(/\-/,"")}.join(" ")))
+    page = @mech.get(URI.encode(@config[:url][:search_keyword]+keyword.map{ |key| key.gsub(/\/.+/, "").gsub(/\(.+?\)/,"").gsub(/\-/,"").format}.join(" ")))
     pp URI.encode(@config[:url][:search_keyword]+keyword.map{ |key| key.gsub(/\/.+/, "").gsub(/\(.+?\)/,"").gsub(/\-/,"")}.join(" "))
     begin
       doc = REXML::Document.new(REXML::Source.new(page.content))
@@ -107,7 +107,7 @@ class Youtube
       music_name = Moji.han_to_zen(music_name, Moji::HAN_KATA)
       music_name = Moji.zen_to_han(music_name, Moji::ZEN_ASYMBOL)
       music_name = Moji.zen_to_han(music_name, Moji::ZEN_NUMBER)
-      music_name = music_name.gsub(/\/.+/, "").gsub(/\(.+?\)/,"").gsub(/\-/,"")
+      music_name = music_name.gsub(/\/.+/, "").gsub(/\(.+?\)/,"").gsub(/\-/,"").format
       puts music_name + song[:title]
       if song[:title].downcase =~ /#{music_name}/
           rank_array = @config[:filter].inject([]){ |rank, config|
@@ -198,4 +198,22 @@ class << CSV
       open_org( path, mode, fs=nil, rs=nil, &block )
     end
   end
+end
+
+module Formatter
+  def format
+    if self.is_a? String
+      regulate self
+    else
+      self
+    end
+  end
+  def regulate(string)
+    return string.gsub(/\*|＊/, "")
+  end
+
+end
+
+class String
+  include Formatter
 end
