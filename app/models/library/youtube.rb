@@ -211,7 +211,6 @@ module Formatter
   def regulate(string)
     return string.gsub(/\*|＊/, "")
   end
-
 end
 
 class String

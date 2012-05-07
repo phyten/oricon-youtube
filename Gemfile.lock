@@ -30,6 +30,7 @@ GEM
       multi_json (~> 1.0)
     arel (3.0.2)
     builder (3.0.0)
+    chronic (0.6.7)
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
       railties (~> 3.2.0)
@@ -146,6 +147,9 @@ GEM
       rack-test (>= 0.5.3)
     webrobots (0.0.12)
       nokogiri (>= 1.4.4)
+    whenever (0.7.3)
+      activesupport (>= 2.3.4)
+      chronic (~> 0.6.3)
     yaml_waml (0.3.0)
 
 PLATFORMS
@@ -169,4 +173,5 @@ DEPENDENCIES
   sqlite3
   uglifier (>= 1.0.3)
   webrat (= 0.7.1)
+  whenever
   yaml_waml
