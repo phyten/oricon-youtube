@@ -19,6 +19,8 @@
 
 # Learn more: http://github.com/javan/whenever
 
+set :output, { :error => 'log/error.log', :standard => 'log/cron.log'}
+
 every '1/* * * * *' do
   runner "script/oricon.rb"
 end
