@@ -11,7 +11,7 @@ gem 'ruby-mysql'
 gem 'yaml_waml'
 gem 'rsruby'
 gem 'factory_girl', '2.3.2'
-gem 'whenever'
+gem 'whenever', :require => false
 
 group :development do
   gem 'rspec-rails', '2.6.1'
