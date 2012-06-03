@@ -109,7 +109,7 @@ class Youtube
       music_name = Moji.zen_to_han(music_name, Moji::ZEN_NUMBER)
       music_name = music_name.gsub(/\/.+/, "").gsub(/\(.+?\)/,"").gsub(/\-/,"").format
       puts music_name + song[:title]
-      if song[:title].downcase =~ /#{music_name}/
+      if song[:title].downcase =~ /#{Regexp.escape(music_name)}/
           rank_array = @config[:filter].inject([]){ |rank, config|
           title = config[:title]
           content = config[:content]
@@ -117,7 +117,7 @@ class Youtube
           rank
         }
       end
-      if song[:title].downcase =~ /#{music_name}/
+      if song[:title].downcase =~ /#{Regexp.escape(music_name)}/
         rank_array << 10
       end
       if rank_array.blank?
@@ -130,7 +130,7 @@ class Youtube
 
       title = @config[:omit][:title]
       content = @config[:omit][:content]
-      if song[:title].downcase =~ /#{title}/ || song["content"] =~ /#{content}/
+      if song[:title].downcase =~ /#{Regexp.escape(title)}/ || song["content"] =~ /#{Regexp.escape(content)}/
           song[:rank] = []
       end
 
