@@ -24,7 +24,7 @@ class Ranking < ActiveRecord::Base
   end
 
   def self.make_ranking
-    oricon = YahooOricon.new
+    oricon = Itunes.new
     youtube = Youtube.new
     good_musics = []
 
